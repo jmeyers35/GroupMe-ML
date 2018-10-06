@@ -104,6 +104,6 @@ def get_users_by_group(group_id):
     members = []
 
     for member in group['members']:
-        members.append((member['name'], member['id']))
+        members.append((member['name'], member['user_id']))
 
     return members
