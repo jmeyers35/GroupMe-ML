@@ -17,7 +17,7 @@ def get_messages_by_user(group_id, user_id):
 
     res =  list(filter(lambda x: x['sender_id'] == user_id, msgs))
     
-    return (res, len(res))
+    return res
 
 """
 Returns a list of all the messages of a group identified by parameter id.
