@@ -17,7 +17,7 @@ def get_messages_by_user(group_id, user_id):
 
     res =  list(filter(lambda x: x['sender_id'] == user_id, msgs))
     
-    return (res, len(res))
+    return res
 
 """
 Returns a list of all the messages of a group identified by parameter id.
@@ -107,3 +107,26 @@ def get_users_by_group(group_id):
         members.append((member['name'], member['user_id']))
 
     return members
+
+
+
+"""
+Returns a list of triples containing User Names and IDs, with all messages sent by the corresponding user
+"""
+def get_all_user_messages(group_id):
+    all_msgs=get_messages(group_id)
+
+    msgs= []
+
+
+    all_members=get_users_by_group(group_id)
+
+
+    for i in range(0, len(all_members)):
+        user_id=all_members[i][1]
+        name= all_members[i][0]
+        res =  list(filter(lambda x: x['sender_id'] == user_id, all_msgs))
+        msgs_text = [x['text'] for x in res]
+
+        msgs.append((user_id, name, msgs_text))
+    return msgs
