@@ -107,3 +107,19 @@ def get_users_by_group(group_id):
         members.append((member['name'], member['user_id']))
 
     return members
+
+def write_group_messages_to_file(group_id):
+    msgs = get_messages(group_id)
+    text_list = [x['text'] + '\n' for x in msgs if x['text'] is not None]
+    with open('messages.txt', 'w') as file:
+        file.writelines(text_list)
+
+def write_user_messages_to_file(group_id, user_id):
+    msgs = get_messages_by_user(group_id, user_id)
+    name = msgs[0]['name']
+    name = name.replace(' ', '_')
+    name = name.lower()
+    text_list = [x['text'] + '\n' for x in msgs if x['text'] is not None]
+    with open(name + '_messages.txt', 'w') as file:
+        file.writelines(text_list)
+
