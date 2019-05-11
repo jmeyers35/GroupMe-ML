@@ -1,4 +1,4 @@
-# GroupMe Utils#
+# GroupMe Utils
 
 Library for fetching messages and other information about GroupMe groups that I use for other projects.
 
