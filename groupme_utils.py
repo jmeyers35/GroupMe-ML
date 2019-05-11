@@ -2,7 +2,7 @@ import json
 import os
 import requests
 
-from config import GROUPME_TOKEN
+from config.config import GROUPME_TOKEN
 
 BASE_URL = "https://api.groupme.com/v3"
 MAX_MESSAGE_BATCH = 100 # Max
@@ -51,9 +51,6 @@ def get_messages(group_id):
 
     return msg_list
 
-
-
-
 """
 Returns a list of dicts containing the groups the user corresponding to the access token is in.
 
@@ -87,17 +84,31 @@ def get_group_ids():
 
     return tups
 
+"""
+Returns a single group denoted by group_id
+"""
 def get_group_by_id(group_id):
     groups = get_groups()
 
     try:
         return next(x for x in groups if x['id'] == group_id)
-
     except StopIteration:
-        print("No group found with id " + str(group_id))
-        
         return None
+"""
+Returns the first group with name group_name, if it exists
+"""
+def get_group_by_name(group_name):
+        groups = get_groups()
 
+        try:
+            return next(x for x in groups if x['name'] == group_name)
+        except StopIteration:
+            return None
+
+"""
+Returns a list of tuples of the form (name, id) containing group
+member info for group group_id
+"""
 def get_users_by_group(group_id):
     group = get_group_by_id(group_id)
 
@@ -108,12 +119,19 @@ def get_users_by_group(group_id):
 
     return members
 
+"""
+Given a group_id, writes all of the messages in that group
+to a text file. 
+"""
 def write_group_messages_to_file(group_id):
     msgs = get_messages(group_id)
     text_list = [x['text'] + '\n' for x in msgs if x['text'] is not None]
     with open('messages.txt', 'w') as file:
         file.writelines(text_list)
-
+"""
+Given a group_id and user_id, writes all of the messages by that user
+in that group to a text file.
+"""
 def write_user_messages_to_file(group_id, user_id):
     msgs = get_messages_by_user(group_id, user_id)
     name = msgs[0]['name']
