@@ -2,7 +2,7 @@ import json
 import os
 import requests
 
-from settings import GROUPME_TOKEN
+from config import GROUPME_TOKEN
 
 BASE_URL = "https://api.groupme.com/v3"
 MAX_MESSAGE_BATCH = 100 # Max
