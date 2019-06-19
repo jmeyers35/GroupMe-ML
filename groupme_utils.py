@@ -1,7 +1,7 @@
 import json
 import os
 import requests
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from config.config import GROUPME_TOKEN
 
